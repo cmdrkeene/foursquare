@@ -11,7 +11,7 @@ class Foursquare
     @auth = {:username => username, :password => password}
   end
   
-  def check_in(venue_id)
+  def checkin(venue_id)
     raise ArgumentError, "you must pass a venue_id" unless venue_id
     response = self.class.post("/checkin.json", {:query => {:vid => venue_id}, :basic_auth => @auth})
     raise VenueNotFoundError if response.keys.include?("addvenueprompt")

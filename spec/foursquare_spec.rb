@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/spec_helper'
 require File.dirname(__FILE__) + '/../init'
 
 describe Foursquare do
-  describe "check_in" do    
+  describe ".checkin" do
     before do
       @valid_venue_id   = 84689
       @invalid_venue_id = 111
@@ -30,21 +30,21 @@ describe Foursquare do
     
     it "should require a venue_id" do
       lambda {
-        Foursquare.new(@username, @password).check_in
+        Foursquare.new(@username, @password).checkin
       }.should raise_error(ArgumentError)
     end
     
     it "should raise an error if user is invalid" do
       lambda {
-        Foursquare.new("bork@pork.com", "arglebargle").check_in(@valid_venue_id)
+        Foursquare.new("bork@pork.com", "arglebargle").checkin(@valid_venue_id)
       }.should raise_error
     end
     
     describe "to a valid venue, with a valid user" do
       it "should check in and return check in data" do
         @foursquare = Foursquare.new(@username, @password)
-        check_in = @foursquare.check_in(@valid_venue_id)
-        check_in.should == {
+        checkin = @foursquare.checkin(@valid_venue_id)
+        checkin.should == {
           "mayor"     => {"type"=>"nochange", "message"=>"Casey W. is The Mayor of Santana's Bay Park."},
           "scoring"   => {
             "score" => {"icon"=>"http://playfoursquare.com/images/scoring/2.png", "points"=>1, "message"=>"First stop today"},
@@ -68,9 +68,21 @@ describe Foursquare do
       it "should raise an error" do
         lambda {
           @foursquare = Foursquare.new(@username, @password)
-          @foursquare.check_in(@invalid_venue_id).should == "foo"
+          @foursquare.checkin(@invalid_venue_id).should == "foo"
         }.should raise_error(Foursquare::VenueNotFoundError)
       end
     end
+  end
+
+  describe ".city" do
+  end
+
+  describe ".tip" do
+  end
+  
+  describe ".user" do
+  end
+    
+  describe ".venue" do
   end
 end
