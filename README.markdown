@@ -22,7 +22,7 @@ credentials:
 
 Then, you can check in with a venue id (vid):
 
-    @foursquare.checkin(:vid => 1234)         # => A specific venue id
+    @foursquare.checkin(:vid => 1234)
     
 Or you can check in with a name search for a venue:
 
@@ -30,27 +30,27 @@ Or you can check in with a name search for a venue:
 
 If successful, you will get a response hash with the following keys:
 
-*    #### ID
+*    **ID**
 
         "id" => 701707
 
-*    #### Message
+*    **Message**
 
         "message" => "OK! We've got you @ Santana's Bay Park."
 
-*    #### Created
+*    **Created**
 
         "created" => "Tue, 11 Aug 09 16:02:13 +0000"
 
 
-*    #### Mayor
+*    **Mayor**
 
         "mayor" => {
           "type"    => "nochange",
           "message" => "Casey W. is The Mayor of Santana's Bay Park."
         }
 
-*    #### Scoring
+*    **Scoring**
 
         "scoring" => {
           "score" => {
@@ -75,7 +75,7 @@ If successful, you will get a response hash with the following keys:
           }
         }
 
-*    #### Badges
+*    **Badges**
 
         "badges" => {
           "badge" => {
@@ -86,7 +86,7 @@ If successful, you will get a response hash with the following keys:
           }
         }
 
-*    #### Venue
+*    **Venue**
     
         "venue" => {
           "city"        => "San Diego",
