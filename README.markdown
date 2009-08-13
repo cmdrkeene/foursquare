@@ -13,7 +13,9 @@ Install
 Usage
 -----
 
-### #**checkin**(options) - _Allows you to check-in to a place._
+### **checkin**(options = {}) 
+
+Allows you to check-in to a place.
 
 First, create a new Foursquare instance with your Basic Authentication
 credentials:
