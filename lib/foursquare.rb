@@ -2,15 +2,15 @@ require 'httparty'
 
 class Foursquare
   class VenueNotFoundError < StandardError;end
-  
+
   include HTTParty
   base_uri "http://api.playfoursquare.com/v1"
   format :json
-  
+
   def initialize(username = nil, password = nil)
     @auth = {:username => username, :password => password}
   end
-  
+
   # Allows you to check-in to a place.
   # :vid      => (optional, not necessary if you are 'shouting' or have a venue name). ID of the venue where you want to check-in.
   # :venue    => (optional, not necessary if you are 'shouting' or have a vid) if you don't have a venue ID, pass the venue name as a string using this parameter. foursquare will attempt to match it on the server-side
@@ -32,13 +32,27 @@ class Foursquare
     raise VenueNotFoundError if response.keys.include?("addvenueprompt")
     response["checkin"]
   end
-  
-  def cities
-    self.class.cities
-  end
-  
+
   # Class methods
+
+  # Returns a list of currently active cities.
   def self.cities
     get("/cities.json")["cities"]
+  end
+
+  # Returns a list of venues near the area specified or that match the search
+  # term. Distance returned is in miles. It will return venue meta-data
+  # related to you and your friends.
+  #
+  # Options
+  #   :geolat   => latitude (required)
+  #   :geolong  => longitude (required)
+  #   :r        => radius in miles (optional)
+  #   :l        => limit of results (optional, default 10)
+  #   :q        => keyword search (optional)
+  def self.venues(options = {})
+    raise ArgumentError, "you must supply :geolat and :geolong" unless options[:geolat] and options[:geolong]
+
+    get("/venues.json", :query => options)["venues"]["group"]
   end
 end
