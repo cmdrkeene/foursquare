@@ -1,95 +1,104 @@
-# A Ruby API for Foursquare (playfoursquare.com)
+Foursquare
+==========
 
-This is a thin interface to Foursquare's JSON API. You can find full documents
-here: http://groups.google.com/group/foursquare-api/web/api-documentation
+A ruby interface for Foursquare's JSON API.
 
-## Actions
+Based on Foursquare API Documentation:
+http://groups.google.com/group/foursquare-api/web/api-documentation
 
-*   **checkin** - check into a venue
-*   **cities** - listing of active cities
-*   **venues** - search for venues
- 
-## Usage
+Install
+-------
 
-### checkin
+    $ gem sources -a http://gems.github.com
+    $ sudo gem install cmdrkeene-foursquare
 
-This is how you check into a venue:
+Usage
+-----
+
+### _checkin_ - Allows you to check-in to a place.
+
+First, create a new Foursquare instance with your Basic Authentication
+credentials:
 
     @foursquare = Foursquare.new("user@example.com", "sekret")
+
+Then, you can check in with a venue id (vid):
+
     @foursquare.checkin(:vid => 1234)         # => A specific venue id
-    @foursquare.checkin(:venue => "Mamoun's") # => A name search for venue
+    
+Or you can check in with a name search for a venue:
+
+    @foursquare.checkin(:venue => "Mamoun's")
 
 If successful, you will get a response hash with the following keys:
 
-#### ID
+*    #### ID
 
-    "id" => 701707
+        "id" => 701707
 
-#### Message
+*    #### Message
 
-    "message" => "OK! We've got you @ Santana's Bay Park."
+        "message" => "OK! We've got you @ Santana's Bay Park."
 
-#### Created
+*    #### Created
 
-    "created" => "Tue, 11 Aug 09 16:02:13 +0000"
+        "created" => "Tue, 11 Aug 09 16:02:13 +0000"
 
 
-#### Mayor
+*    #### Mayor
 
-    "mayor" => {
-      "type"    => "nochange",
-      "message" => "Casey W. is The Mayor of Santana's Bay Park."
-    }
-
-#### Scoring
-
-    "scoring" => {
-      "score" => {
-        "icon"    => "http://playfoursquare.com/images/scoring/2.png",
-        "points"  => 1,
-        "message" => "First stop today"
-      },
-      "total" => {
-        "points"  => 6,
-        "message" => "6 pts "
-      },
-      "rank" => {
-        "city" => {
-          "city"      => "San Diego",
-          "position"  => 42,
-          "message"   => "#42 in San Diego (this week)"
-        },
-        "friends" => {
-          "position"  => 1,
-          "message"   => "#1 amongst friends"
+        "mayor" => {
+          "type"    => "nochange",
+          "message" => "Casey W. is The Mayor of Santana's Bay Park."
         }
-      }
-    }
 
-#### Badges
+*    #### Scoring
 
-    "badges" => {
-      "badge" => {
-        "name"  => "Newbie",
-        "text"  => "Congrats on your first check-in!",
-        "icon"  => "http://playfoursquare.com/images/badges/newbie_on.png",
-        "id"    => 54494
-      }
-    }
+        "scoring" => {
+          "score" => {
+            "icon"    => "http://playfoursquare.com/images/scoring/2.png",
+            "points"  => 1,
+            "message" => "First stop today"
+          },
+          "total" => {
+            "points"  => 6,
+            "message" => "6 pts "
+          },
+          "rank" => {
+            "city" => {
+              "city"      => "San Diego",
+              "position"  => 42,
+              "message"   => "#42 in San Diego (this week)"
+            },
+            "friends" => {
+              "position"  => 1,
+              "message"   => "#1 amongst friends"
+            }
+          }
+        }
 
-#### Venue
+*    #### Badges
+
+        "badges" => {
+          "badge" => {
+            "name"  => "Newbie",
+            "text"  => "Congrats on your first check-in!",
+            "icon"  => "http://playfoursquare.com/images/badges/newbie_on.png",
+            "id"    => 54494
+          }
+        }
+
+*    #### Venue
     
-    "venue" => {
-      "city"        => "San Diego",
-      "address"     => "1975 Morena Blvd.",
-      "name"        => "Santana's Bay Park",
-      "zip"         => 92110, 
-      "geolong"     => -117.207,
-      "geolat"      => 32.782, 
-      "crossstreet" => nil,
-      "id"          => 84689,
-      "cityid"      => 38,
-      "state"       => "CA"
-    }
-    
-### cities
+        "venue" => {
+          "city"        => "San Diego",
+          "address"     => "1975 Morena Blvd.",
+          "name"        => "Santana's Bay Park",
+          "zip"         => 92110, 
+          "geolong"     => -117.207,
+          "geolat"      => 32.782, 
+          "crossstreet" => nil,
+          "id"          => 84689,
+          "cityid"      => 38,
+          "state"       => "CA"
+        }
