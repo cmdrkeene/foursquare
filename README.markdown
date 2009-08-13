@@ -13,7 +13,7 @@ Install
 Usage
 -----
 
-### **checkin**(options = {}) 
+### checkin(options = {}) 
 
 Allows you to check-in to a place.
 
