@@ -1,7 +1,8 @@
 Foursquare
 ==========
 
-A ruby interface for Foursquare's JSON API.
+A ruby interface for Foursquare's JSON API. Sign up for a Foursquare account
+at: http://playfoursquare.com
 
 Based on Foursquare API Documentation:
 http://groups.google.com/group/foursquare-api/web/api-documentation
