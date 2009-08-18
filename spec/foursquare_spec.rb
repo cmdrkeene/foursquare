@@ -74,7 +74,7 @@ describe Foursquare do
   describe ".cities" do
     before do
       FakeWeb.register_uri(:get,
-                           "http://api.playfoursquare.com/v1/cities.json?",
+                           "http://api.playfoursquare.com/v1/cities.json",
                            :body => fakeweb_read('cities.json'))
     end
 
@@ -192,6 +192,23 @@ describe Foursquare do
 
       @foursquare = Foursquare.new(@username, @password)
       @foursquare.venues(:geolat => "25.7323", :geolong => "80.2436").should == venues_with_user_data
+    end
+  end
+
+  describe ".available?" do
+    it "it should return true when foursquare is up" do
+      FakeWeb.register_uri(:get,
+                           "http://api.playfoursquare.com/v1/test.json",
+                           :body => fakeweb_read('test_success.json'))
+
+      Foursquare.should be_available
+    end
+
+    it "should return false when foursquare is down" do
+      FakeWeb.register_uri(:get,
+                           "http://api.playfoursquare.com/v1/test.json",
+                           :body => fakeweb_read('test_failure.json'))
+      Foursquare.should_not be_available
     end
   end
 end

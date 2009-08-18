@@ -48,7 +48,7 @@ class Foursquare
 
   # Returns a list of currently active cities.
   def self.cities
-    get("/cities.json")["cities"]
+    get("/cities.json", :query => nil)["cities"]
   end
 
   # Returns a list of venues near the area specified or that match the search
@@ -65,6 +65,13 @@ class Foursquare
     require_latitude_and_longitude(options)
 
     get("/venues.json", :query => options)["venues"]["group"]
+  end
+
+  # Test if API is up and available
+  # http://api.playfoursquare.com/v1/test
+  def self.available?
+    response = get("/test.json", :query => nil)
+    (!response.nil? && response["response"] == "ok") ? true : false
   end
 
   private
