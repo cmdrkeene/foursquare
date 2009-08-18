@@ -14,11 +14,17 @@ class Foursquare
   # Allows you to check-in to a place.
   #
   # Options
-  #   :vid      => (optional, not necessary if you are 'shouting' or have a venue name). ID of the venue where you want to check-in.
-  #   :venue    => (optional, not necessary if you are 'shouting' or have a vid) if you don't have a venue ID, pass the venue name as a string using this parameter. foursquare will attempt to match it on the server-side
+  #   :vid      => (optional, not necessary if you are 'shouting' or have a
+  #                venue name). ID of the venue where you want to check-in.
+  #   :venue    => (optional, not necessary if you are 'shouting' or have a
+  #                vid) if you don't have a venue ID, pass the venue name as
+  #                a string using this parameter. foursquare will attempt to
+  #                match it on the server-side
   #   :shout    => (optional) a message about your check-in
-  #   :private  => (optional, defaults to the user's setting). true means "don't show your friends". false means "show everyone"
-  #   :twitter  => (optional, defaults to the user's setting). false means "send to twitter". false means "don't send to twitter"
+  #   :private  => (optional, defaults to the user's setting). true means
+  #                "don't show your friends". false means "show everyone"
+  #   :twitter  => (optional, defaults to the user's setting). false means
+                   # "send to twitter". false means "don't send to twitter"
   #   :geolat   => (optional, but recommended)
   #   :geolong  => (optional, but recommended)
   def checkin(options = {})
@@ -30,7 +36,9 @@ class Foursquare
       options[:twitter] = 1 if options[:twitter] == true
       options[:twitter] = 0 if options[:twitter] == false
     end
-    response = self.class.post("/checkin.json", :query => options, :basic_auth => @auth)
+    response = self.class.post("/checkin.json",
+                               :query => options,
+                               :basic_auth => @auth)
     raise VenueNotFoundError if response.keys.include?("addvenueprompt")
     response["checkin"]
   end
@@ -40,13 +48,18 @@ class Foursquare
   def venues(options = {})
     self.class.require_latitude_and_longitude(options)
 
-    response = self.class.get("/venues.json", :query => options, :basic_auth => @auth)["venues"]
+    response = self.class.get("/venues.json",
+                              :query => options,
+                              :basic_auth => @auth)["venues"]
     response && response.flatten
   end
 
+  ############################################################################
   # Class methods
+  ############################################################################
 
   # Returns a list of currently active cities.
+  # http://api.playfoursquare.com/v1/cities
   def self.cities
     get("/cities.json", :query => nil)["cities"]
   end
@@ -77,6 +90,8 @@ class Foursquare
   private
 
   def self.require_latitude_and_longitude(options)
-    raise ArgumentError, "you must supply :geolat and :geolong" unless options[:geolat] and options[:geolong]
+    unless options[:geolat] and options[:geolong]
+      raise ArgumentError, "you must supply :geolat and :geolong"
+    end
   end
 end
