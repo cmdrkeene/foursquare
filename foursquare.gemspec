@@ -5,20 +5,20 @@
 
 Gem::Specification.new do |s|
   s.name = %q{foursquare}
-  s.version = "0.0.2"
+  s.version = "0.0.3"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Brandon Keene"]
-  s.date = %q{2009-08-12}
+  s.date = %q{2009-08-28}
   s.description = %q{Ruby API for Foursquare (playfoursquare.com)}
   s.email = %q{bkeene@gmail.com}
   s.extra_rdoc_files = [
     "LICENSE",
-     "README"
+     "README.markdown"
   ]
   s.files = [
     "LICENSE",
-     "README",
+     "README.markdown",
      "Rakefile",
      "VERSION",
      "foursquare.gemspec",
@@ -26,6 +26,12 @@ Gem::Specification.new do |s|
      "lib/foursquare.rb",
      "spec/fixtures/checkin_failure.json",
      "spec/fixtures/checkin_success.json",
+     "spec/fixtures/cities.json",
+     "spec/fixtures/test_failure.json",
+     "spec/fixtures/test_success.json",
+     "spec/fixtures/user.json",
+     "spec/fixtures/venues_authenticated.json",
+     "spec/fixtures/venues_unauthenticated.json",
      "spec/foursquare_spec.rb",
      "spec/spec_helper.rb"
   ]
