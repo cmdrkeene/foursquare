@@ -1,6 +1,7 @@
 require 'httparty'
 
 class Foursquare
+  class AuthenticationRequiredError < StandardError;end
   class VenueNotFoundError < StandardError;end
 
   include HTTParty
@@ -53,6 +54,20 @@ class Foursquare
                               :basic_auth => @auth)["venues"]
     response && response.flatten
   end
+  
+  # Returns data for a particular user
+  #
+  # Options
+  #   :uid    => userid for the user whose information you want to retrieve. 
+  #              if you do not specify a 'uid', the authenticated user's 
+  #              profile data will be returned.
+  #   :badges => (optional, default: false) set to true ("1") to also show 
+  #              badges for this user
+  #   :mayor  => (optional, default: false) set to true ("1") to also show 
+  #              venues for which this user is a mayor
+  def user(options = {}) 
+    self.class.get("/user.json", :query => options)["user"]
+  end
 
   ############################################################################
   # Class methods
@@ -64,6 +79,18 @@ class Foursquare
     get("/cities.json", :query => nil)["cities"]
   end
 
+  # Returns a list of tips near the area specified. (The distance returned is 
+  # in miles).
+  # Options
+  #   :geolat   => latitude (required)
+  #   :geolong  => longitude (required)
+  # 
+  # http://api.playfoursquare.com/v1/tips
+  def self.tips(options = {})
+    require_latitude_and_longitude(options)
+    # XXX
+  end
+  
   # Returns a list of venues near the area specified or that match the search
   # term. Distance returned is in miles. It will return venue meta-data
   # related to you and your friends.
@@ -74,6 +101,8 @@ class Foursquare
   #   :r        => radius in miles (optional)
   #   :l        => limit of results (optional, default 10)
   #   :q        => keyword search (optional)
+  # 
+  # http://api.playfoursquare.com/v1/venues
   def self.venues(options = {})
     require_latitude_and_longitude(options)
 

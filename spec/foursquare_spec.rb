@@ -106,13 +106,72 @@ describe Foursquare do
     end
   end
 
-  describe ".tip" do
-  end
-
-  describe ".user" do
+  describe ".tips" do
+    # Having problems with the tips resource respect coordinates
   end
 
   describe "#user" do
+    it "should return user data for an arbitrary user" do
+      FakeWeb.register_uri(:get,
+                           "http://api.playfoursquare.com/v1/user.json?uid=31786",
+                           :body => fakeweb_read('user.json'))
+      
+      @foursquare = Foursquare.new(@username, @password)
+      @foursquare.user(:uid => 31786).should == {
+        "city" => {"shortname"=>"San Diego", 
+                   "name"=>"San Diego",
+                   "geolong"=>-117.156,
+                   "geolat"=>32.7153, "id"=>38},
+        "gender"=>"none",
+        "lastname"=>"Connor",
+        "id"=>31786,
+        "checkin"=>{"shout"=>nil,
+                    "id"=>707746,
+                    "display"=>"John C. @ Santana's Mexican Grill (Bay Park)",
+                    "venue"=>{"address"=>"1975 Morena Blvd",
+                              "name"=>"Santana's Mexican Grill (Bay Park)", 
+                              "geolong"=>-117.207,
+                              "geolat"=>32.782,
+                              "crossstreet"=>"Napier St",
+                              "id"=>84689},
+        "created"=>"Wed, 12 Aug 09 10:21:33 +0000"},
+        "firstname"=>"John",
+        "settings"=>{"feeds_key"=>"9c0cf605ddd2251495640129c7c40c6e"}}
+    end
+
+    it "should return user data for the authenticated user" do
+      FakeWeb.register_uri(:get,
+                           "http://api.playfoursquare.com/v1/user.json",
+                           :body => fakeweb_read('user.json'))
+      
+      @foursquare = Foursquare.new(@username, @password)
+      @foursquare.user.should == {
+        "city" => {"shortname"=>"San Diego", 
+                   "name"=>"San Diego",
+                   "geolong"=>-117.156,
+                   "geolat"=>32.7153, "id"=>38},
+        "gender"=>"none",
+        "lastname"=>"Connor",
+        "id"=>31786,
+        "checkin"=>{"shout"=>nil,
+                    "id"=>707746,
+                    "display"=>"John C. @ Santana's Mexican Grill (Bay Park)",
+                    "venue"=>{"address"=>"1975 Morena Blvd",
+                              "name"=>"Santana's Mexican Grill (Bay Park)", 
+                              "geolong"=>-117.207,
+                              "geolat"=>32.782,
+                              "crossstreet"=>"Napier St",
+                              "id"=>84689},
+        "created"=>"Wed, 12 Aug 09 10:21:33 +0000"},
+        "firstname"=>"John",
+        "settings"=>{"feeds_key"=>"9c0cf605ddd2251495640129c7c40c6e"}}
+    end
+  end
+  
+  describe "#user" do
+    it "should return authenticated user's data" do
+      
+    end
   end
 
   describe ".venue" do
