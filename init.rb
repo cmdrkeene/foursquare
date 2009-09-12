@@ -1,1 +1,7 @@
+require 'geokit'
+require 'httparty'
 require 'lib/foursquare'
+require 'lib/foursquare/base'
+require 'lib/foursquare/checkin'
+require 'lib/foursquare/venue'
+require 'lib/foursquare/user'

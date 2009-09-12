@@ -1,10 +1,11 @@
 require 'rubygems'
 require 'spork'
 require 'fakeweb'
+require 'init'
 
 Spork.prefork do
   require 'spec/autorun'
-
+  
   Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each {|f| require f}
   
   FakeWeb.allow_net_connect = false
